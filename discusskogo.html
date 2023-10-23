@@ -1,0 +1,114 @@
+<?php
+require 'db.inc.php';
+
+if (isset($_POST['eng']) && isset($_POST['kon']) && isset($_POST['comment1'])) {
+    echo "hai";
+    if(isset($_POST['submit'])){
+        echo "Entered";
+    $eng=mysqli_real_escape_string($con2,$_POST['eng']);
+    $kon=mysqli_real_escape_string($con2,$_POST['kon']);
+    $comment1=mysqli_real_escape_string($con2,$_POST['comment1']);
+
+    if (($eng=="" || $kon=="")==true) {
+        echo '<script type="text/javascript">
+        function myFunc1() {
+        msg="Kindly submit if u have entered words only";
+        alert(msg);
+        }
+        myFunc1()
+        </script>';
+    }else{
+        $res=mysqli_query($con2,
+        "INSERT INTO `new_words`(`username`, `eng`, `kon`,`comment1`) VALUES ('{$_SESSION['NAME']}','$eng','$kon','$comment1')");
+        header('location:discusskogo.php');
+        die();
+    } 
+    }
+}
+?>
+<html>
+
+<head>
+    <title>KOGO - Start translating today!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="KOGO Title Logo.png" type="image/x-icon">
+    <link rel="stylesheet" href=" styles.css">
+    <link rel="stylesheet" href="discussstyles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div>
+            <img src="icon_removebg.png" alt="logo" class="logo" a onClick="location.href='main.html'">
+            <nav>
+                <ul>
+                    <ul style="background:#181A20;">
+                    <li><a style="cursor: pointer;" onClick="location.href='Main.php'">HOME</a></li>
+                    <li><a style="cursor: pointer;" onClick="location.href='features.php'">FEATURES</a></li>
+                    <li><a style="cursor: pointer;" onClick="location.href='aboutus.php'">ABOUT US</a></li>
+                    <?php 
+                    if($_SESSION['logged_in'] == 1){ ?>
+                        <li><a c><?php echo $_SESSION['NAME']; ?></a></li>
+                        <li><button class="login" ><a href='logout.php'>LOGOUT</a></button></li>
+                    <?php }else{ $_SESSION['NAME'] = ""; echo "plzz";?>
+                        <li><button class="login" onClick="location.href='login.php'">LOGIN</button></li>
+                    <?php } ?>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="box1">
+        <p class="title1">Add your new word here</p>
+        <textarea class="textbox1" placeholder=" Enter your Konkani Text here"></textarea>
+        <textarea class="textbox2" placeholder=" Enter your English Text here"></textarea>
+        <p class="title2">Add your comments (if any)</p>
+        <textarea class="textbox3"></textarea>
+        <button class="buttonstyle1">Add Word</button>
+    </div>
+    <p class="title4">Recent Comments</p>
+                <?php
+        $sql="SELECT * FROM `new_words` LIMIT 3";
+        $result = $con2->query($sql) or die($con2->error);
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) { ?>
+        <div class="box2">
+        <button class="rc1">
+            <div class="rccontent1"><p class="rcpara">@username</p></div>
+            <div class="rcinside1">Konkani - <span style="color:#ECECEC;">Enter Konkani Word here</span><br>
+            English - <span style="color:#ECECEC;">Enter English Word here</span></div>
+            </button>
+       <div><button class="buttonstyle2">View All</button></div>
+    </div>
+        <?php   }
+            }
+if(isset($_POST['newcomment'])) {
+$_SESSION['sno']= $_POST['newcomment'];
+// echo $_SESSION['sno'];}
+header('location:displaycomments.php');
+die();}
+    ?>
+
+    <section class="footer">
+        <div style="text-align: center;" class="lastpara">
+            <p style="color:#ECECEC">
+                <span style="color:#2363DC; font-weight: 650;">KOGO</span> is optimized for learning, testing and
+                training. Examples might
+                be<br>simplified to improve reading
+                and
+                basic understanding. References and<br>examples are constantly reviewed to avoid errors, but we
+                cannot
+                warrant full<br>correctness of all content. While using this site, you agree to have read
+                and<br>accepted our
+                terms of use, cookie and privacy policy.
+            </p>
+            <p style="color:#2363DC; margin:0"><br>© Copyright 2021-2022 by AAC<br>
+                All Rights Reserved.
+            </p>
+        </div>
+    </section>
+</body>
+
+</html>

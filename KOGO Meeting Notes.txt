@@ -1,0 +1,15 @@
+KOGO Updates
+
+1. Visit Forum Page to be designed - All the words that the user added will be present there
+
+2. Enhance your language to be put in the third space instead of second
+
+3. On designing the Visit Forum Page - Remember a button to add words for the users - and then later on describe the various words
+that the user have added
+
+4. Admin Page Design and Front end to be done effectively and immediately. 
+Admin can view what the users have added and the various things that have been done
+
+On approving the word, it should be highlighted green. A green tick would suffice to represent that the word has been approved. 
+
+   
