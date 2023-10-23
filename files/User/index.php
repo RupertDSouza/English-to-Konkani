@@ -803,8 +803,6 @@ $theword = array();
                 $sentcs = verbbfoverbs($Ques,$verb);
                 $trans = verbsInTheEnd($sentcs,$verbs);
                 $final = prverbInTheEnd($trans,$thrid_pr_verb);
-
-                print_r($final);
 //Outputs "you guys great are"
             $nottobeadded = array('is','the','did');
 
