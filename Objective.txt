@@ -1,3 +1,0 @@
-Our Objective- To create a Konkani to english translator
-Firstly through voice input and then with output as the translated standard english text
-from the konkani voice input given by the user.

@@ -1,5 +1,5 @@
 <?php
-require('db.inc.php');
+require('./files/db.inc.php');
 if (isset($_SESSION['NAME'])) {
     $_SESSION['logged_in']=1;
 }else{
@@ -10,8 +10,8 @@ if (isset($_SESSION['NAME'])) {
 <head>
     <title>KOGO - Start translating today!</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="KOGO Title Logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
+    <link rel="icon" href="./images/KOGO Title Logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="./css/styles.css?v=<?php echo time(); ?>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
@@ -20,18 +20,24 @@ if (isset($_SESSION['NAME'])) {
 <body>
     <header>
             <div>
-            <img src="icon_removebg.png" alt="logo" class="logo" a onClick="location.href='index.php'">
+            <img src="./images/icon_removebg.png" alt="logo" class="logo" a onClick="location.href='./'">
             <nav>
                 <ul>
-                    <li><a style="cursor: pointer;" onClick="location.href='index.php'">HOME</a></li>
-                    <li><a style="cursor: pointer;" onClick="location.href='features.php'">FEATURES</a></li>
-                    <li><a style="cursor: pointer;" onClick="location.href='aboutus.php'">ABOUT US</a></li>
+                    <li><a style="cursor: pointer;" onClick="location.href='./'">HOME</a></li>
+                    <li><a style="cursor: pointer;" onClick="location.href='./files/User/features.php'">FEATURES</a></li>
+                    <li><a style="cursor: pointer;" onClick="location.href='./files/User/aboutus.php'">ABOUT US</a></li>
                     <?php
                     if($_SESSION['logged_in']==1){ ?>
-                        <li style='color:#2B7FE0;'><?php echo $_SESSION['NAME']; ?></li>
-                        <li><button class="login" onClick="location.href='logout.php'">LOGOUT</a></button></li>
+                        <li style='color:#2B7FE0;'>
+                        <?php if($_SESSION['ROLE']==1){ ?>
+                            <a href='./files/Admin/'>
+                            <?php echo $_SESSION['NAME']; ?>
+                            <a>
+                            <?php 
+                            }else{echo $_SESSION['NAME'];} ?> </li>
+                        <li><button class="login" onClick="location.href='./files/Log/out'">LOGOUT</a></button></li>
                     <?php }else{ ?>
-                        <li><button class="login" onClick="location.href='login.php'">LOGIN</button></li>
+                        <li><button class="login" onClick="location.href='./files/Log/in'">LOGIN</button></li>
                     <?php } ?>
                 </ul>
             </nav>
@@ -41,20 +47,20 @@ if (isset($_SESSION['NAME'])) {
         <div>
             <h2 class="trready">Translation<br>Ready!</h2><br>
             <h5 class="trready2">Start your Konkani-English Translation today!</h5><br>
-            <button class="trynow" onClick="location.href='trynow.php'">TRY NOW!</button>
+            <button class="trynow" onClick="location.href='./files/User'">TRY NOW!</button>
         </div>
-        <div><img class="illustrate1" src="brazuca.png"></div>
+        <div><img class="illustrate1" src="./images/brazuca.png"></div>
     </section>
     <section class="rectangle2 center" style="margin-bottom: 42px;">
-        <div><img src="Brazuca - Airport (1)_auto_x2.jpg" class="illustrate2"></div>
+        <div><img src="./images/Brazuca - Airport (1)_auto_x2.jpg" class="illustrate2"></div>
         <div style="margin-right: auto;">
             <h2 style="margin:65 0 9 0" class="enhance">Enhance your<br>Language</h2><br>
             <h5 class="enhance2">Check out our resources to help you<br>excel in Konkani and English!</h5><br>
                     <?php
                     if($_SESSION['logged_in'] == 1){ ?>
-                        <button class="explorenow" onClick="location.href='explorenow.php'">EXPLORE NOW</button>
+                        <button class="explorenow" onClick="location.href='./files/User/explorenow.php'">EXPLORE NOW</button>
                     <?php }else{ ?>
-                        <button class="explorenow" onClick="location.href='login.php'">EXPLORE NOW</button>
+                        <button class="explorenow" onClick="location.href='./files/Log/in'">EXPLORE NOW</button>
                     <?php } ?>
         </div>
     </section>
@@ -64,12 +70,12 @@ if (isset($_SESSION['NAME'])) {
             <h5 class="discuss2">Clear your doubts with our<br>community today!</h5><br>
                     <?php
                     if($_SESSION['logged_in'] == 1){ ?>
-                        <button class="forum" onClick="location.href='discusskogo.php'">VISIT FORUM</button>
+                        <button class="forum" onClick="location.href='./files/User/discusskogo.php'">VISIT FORUM</button>
                     <?php }else{ ?>
-                        <button class="forum" onClick="location.href='login.php'">VISIT FORUM</button>
+                        <button class="forum" onClick="location.href='./files/Log/in'">VISIT FORUM</button>
                     <?php } ?>
         </div>
-        <div><img src="Brazuca-HappyTogether_auto_x2.jpg" class="illustrate3"></div>
+        <div><img src="./images/Brazuca-HappyTogether_auto_x2.jpg" class="illustrate3"></div>
     </section>
     <script type="text/javascript">
      function logout(){
