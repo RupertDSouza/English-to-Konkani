@@ -21,7 +21,7 @@ require('../db.inc.php');//php_flag opcache.enable Off;
                     <li><a style="cursor: pointer;" onClick="location.href='../../'">HOME</a></li>
                     <li><a style="cursor: pointer;" onClick="location.href='./features.php'">FEATURES</a></li>
                     <li><a style="cursor: pointer;" onClick="location.href='./aboutus.php'">ABOUT US</a></li>
-                    <?php 
+                    < <?php 
                     if($_SESSION['logged_in'] == 1){ ?>
                         <li style='color:#2B7FE0;'>
                         <?php if($_SESSION['ROLE']==1){ ?>
@@ -29,7 +29,7 @@ require('../db.inc.php');//php_flag opcache.enable Off;
                             <?php echo $_SESSION['NAME']; ?>
                             <a>
                             <?php 
-                            }else{echo $_SESSION['NAME'];} ?> </li>
+                            }else{echo $_SESSION['NAME'];} ?></li>
                         <li><button class="login" onClick="location.href='../Log/out'">LOGOUT</a></button></li>
                     <?php }else{;?>
                         <li><button class="login" onClick="location.href='../Log/in'">LOGIN</button></li>
@@ -62,492 +62,84 @@ require('../db.inc.php');//php_flag opcache.enable Off;
                             echo $eng;?></textarea>
     <button class="KOGOb">KOGO</button>
         </form>
-    <?php
-                    
+            <?php
                     function ifInDatabase1($sentence,$kon) {
-                                    //foreach($wrd as $key) {
-                                        if(in_array($sentence,$kon)) {
-                                            global $kn1;
-                                            array_push($kn1, $sentence);
-                                        }
-                                        return $kn1;
-                                    //}
-                                }
+                        //foreach($wrd as $key) {
+                        if(in_array($sentence,$kon)) {
+                            global $kn1;
+                            array_push($kn1, $sentence);
+                        }
+                        return $kn1;
+                        //}
+                    }
                                 
-                                function ifInDatabase2($sentences,$kon){
-                                    $wordArray = array($sentences);
-                                    foreach($wordArray as $key => $wrd) {
-                                        if(in_array($sentences,$kon)) {
-                                            global $kn1;
-                                            array_push($kn1, $wrd);
-                                        }
-                                        return $kn1;
-                                    }
-                                }
+                    function ifInDatabase2($sentences,$kon){
+                        $wordArray = array($sentences);
+                        foreach($wordArray as $key => $wrd) {
+                            if(in_array($sentences,$kon)) {
+                                global $kn1;
+                                array_push($kn1, $wrd);
+                            }
+                            return $kn1;
+                        }
+                    }
 
-                                function addToArray($sentences){
-                                    $wordArray = array($sentences);
-                                    foreach($wordArray as $key => $wrd) {
-                                            global $kn1;
-                                            array_push($kn1, $wrd);
-                                    }
-                                    return $kn1;
-                                }
+                    function addToArray($sentences){
+                        $wordArray = array($sentences);
+                        foreach($wordArray as $key => $wrd) {
+                                global $kn1;
+                                array_push($kn1, $wrd);
+                        }
+                        return $kn1;
+                    }
 
 //.......................................................................................
-                $pronoun = array(); 
+        include('./fetch.php');
 
-            $sql="SELECT Eng FROM `all_words` WHERE gramtyp='pronoun'
-                  UNION
-                  SELECT Eng FROM `table_a` WHERE gramtyp='pronoun'
-                  UNION
-                  SELECT Eng FROM `table_b` WHERE gramtyp='pronoun'
-                  UNION
-                  SELECT Eng FROM `table_c` WHERE gramtyp='pronoun'
-                  UNION
-                  SELECT Eng FROM `table_d` WHERE gramtyp='pronoun'
-                  UNION
-                  SELECT Eng FROM `table_e` WHERE gramtyp='pronoun'
-                  UNION
-                  SELECT Eng FROM `table_f` WHERE gramtyp='pronoun'
-                  UNION
-                  SELECT Eng FROM `table_g` WHERE gramtyp='pronoun'
-                  UNION
-                  SELECT Eng FROM `table_h` WHERE gramtyp='pronoun'
-                  UNION
-                  SELECT Eng FROM `table_i` WHERE gramtyp='pronoun'
-                  UNION
-                  SELECT Eng FROM `table_j` WHERE gramtyp='pronoun'
-                  UNION
-                  SELECT Eng FROM `table_k` WHERE gramtyp='pronoun'
-                  UNION
-                  SELECT Eng FROM `table_l` WHERE gramtyp='pronoun'
-                  UNION
-                  SELECT Eng FROM `table_m` WHERE gramtyp='pronoun'
-                  UNION
-                  SELECT Eng FROM `table_n` WHERE gramtyp='pronoun'
-                  UNION
-                  SELECT Eng FROM `table_o` WHERE gramtyp='pronoun'
-                  UNION
-                  SELECT Eng FROM `table_p` WHERE gramtyp='pronoun'
-                  UNION
-                  SELECT Eng FROM `table_q` WHERE gramtyp='pronoun'
-                  UNION
-                  SELECT Eng FROM `table_r` WHERE gramtyp='pronoun'
-                  UNION
-                  SELECT Eng FROM `table_s` WHERE gramtyp='pronoun'
-                  UNION
-                  SELECT Eng FROM `table_t` WHERE gramtyp='pronoun'
-                  UNION
-                  SELECT Eng FROM `table_u` WHERE gramtyp='pronoun'
-                  UNION
-                  SELECT Eng FROM `table_v` WHERE gramtyp='pronoun'
-                  UNION
-                  SELECT Eng FROM `table_w` WHERE gramtyp='pronoun'
-                  UNION
-                  SELECT Eng FROM `table_x` WHERE gramtyp='pronoun'
-                  UNION
-                  SELECT Eng FROM `table_y` WHERE gramtyp='pronoun'
-                  UNION
-                  SELECT Eng FROM `table_z` WHERE gramtyp='pronoun'";
-            $result = $con1->query($sql) or die($con1->error);
-            if ($result->num_rows > 0){
-                while($rows=$result->fetch_assoc()){
-                    $first = $rows['Eng'];
-                    array_push($pronoun, $first); 
-                }
-            } 
+        function sentence_formation($word,$n,$con1) {
 
- $noun = array(); 
+            $words_from_database = array();
+            $verbs = array('are','were','decide','decided');
+            $partofspeech = ['adverb','noun','pronoun','Interrogative','verb','verbs','3pr_verb'];
 
-            $sql="SELECT Eng FROM `all_words` WHERE gramtyp='noun'
-                  UNION
-                  SELECT Eng FROM `table_a` WHERE gramtyp='noun'
-                  UNION
-                  SELECT Eng FROM `table_b` WHERE gramtyp='noun'
-                  UNION
-                  SELECT Eng FROM `table_c` WHERE gramtyp='noun'
-                  UNION
-                  SELECT Eng FROM `table_d` WHERE gramtyp='noun'
-                  UNION
-                  SELECT Eng FROM `table_e` WHERE gramtyp='noun'
-                  UNION
-                  SELECT Eng FROM `table_f` WHERE gramtyp='noun'
-                  UNION
-                  SELECT Eng FROM `table_g` WHERE gramtyp='noun'
-                  UNION
-                  SELECT Eng FROM `table_h` WHERE gramtyp='noun'
-                  UNION
-                  SELECT Eng FROM `table_i` WHERE gramtyp='noun'
-                  UNION
-                  SELECT Eng FROM `table_j` WHERE gramtyp='noun'
-                  UNION
-                  SELECT Eng FROM `table_k` WHERE gramtyp='noun'
-                  UNION
-                  SELECT Eng FROM `table_l` WHERE gramtyp='noun'
-                  UNION
-                  SELECT Eng FROM `table_m` WHERE gramtyp='noun'
-                  UNION
-                  SELECT Eng FROM `table_n` WHERE gramtyp='noun'
-                  UNION
-                  SELECT Eng FROM `table_o` WHERE gramtyp='noun'
-                  UNION
-                  SELECT Eng FROM `table_p` WHERE gramtyp='noun'
-                  UNION
-                  SELECT Eng FROM `table_q` WHERE gramtyp='noun'
-                  UNION
-                  SELECT Eng FROM `table_r` WHERE gramtyp='noun'
-                  UNION
-                  SELECT Eng FROM `table_s` WHERE gramtyp='noun'
-                  UNION
-                  SELECT Eng FROM `table_t` WHERE gramtyp='noun'
-                  UNION
-                  SELECT Eng FROM `table_u` WHERE gramtyp='noun'
-                  UNION
-                  SELECT Eng FROM `table_v` WHERE gramtyp='noun'
-                  UNION
-                  SELECT Eng FROM `table_w` WHERE gramtyp='noun'
-                  UNION
-                  SELECT Eng FROM `table_x` WHERE gramtyp='noun'
-                  UNION
-                  SELECT Eng FROM `table_y` WHERE gramtyp='noun'
-                  UNION
-                  SELECT Eng FROM `table_z` WHERE gramtyp='noun'";
-            $result = $con1->query($sql) or die($con1->error);
-            if ($result->num_rows > 0){
-                while($rows=$result->fetch_assoc()){
-                    $second = $rows['Eng'];
-                    array_push($noun, $second); 
-                }
-            }
+            if ($partofspeech[$n] != 'verbs'){
+                $sql=fetch('Eng','gramtyp',$partofspeech[$n]);
 
-                $adverb = array(); 
-
-            $sql="SELECT Eng FROM `all_words` WHERE gramtyp='adverb'
-                  UNION
-                  SELECT Eng FROM `table_a` WHERE gramtyp='adverb'
-                  UNION
-                  SELECT Eng FROM `table_b` WHERE gramtyp='adverb'
-                  UNION
-                  SELECT Eng FROM `table_c` WHERE gramtyp='adverb'
-                  UNION
-                  SELECT Eng FROM `table_d` WHERE gramtyp='adverb'
-                  UNION
-                  SELECT Eng FROM `table_e` WHERE gramtyp='adverb'
-                  UNION
-                  SELECT Eng FROM `table_f` WHERE gramtyp='adverb'
-                  UNION
-                  SELECT Eng FROM `table_g` WHERE gramtyp='adverb'
-                  UNION
-                  SELECT Eng FROM `table_h` WHERE gramtyp='adverb'
-                  UNION
-                  SELECT Eng FROM `table_i` WHERE gramtyp='adverb'
-                  UNION
-                  SELECT Eng FROM `table_j` WHERE gramtyp='adverb'
-                  UNION
-                  SELECT Eng FROM `table_k` WHERE gramtyp='adverb'
-                  UNION
-                  SELECT Eng FROM `table_l` WHERE gramtyp='adverb'
-                  UNION
-                  SELECT Eng FROM `table_m` WHERE gramtyp='adverb'
-                  UNION
-                  SELECT Eng FROM `table_n` WHERE gramtyp='adverb'
-                  UNION
-                  SELECT Eng FROM `table_o` WHERE gramtyp='adverb'
-                  UNION
-                  SELECT Eng FROM `table_p` WHERE gramtyp='adverb'
-                  UNION
-                  SELECT Eng FROM `table_q` WHERE gramtyp='adverb'
-                  UNION
-                  SELECT Eng FROM `table_r` WHERE gramtyp='adverb'
-                  UNION
-                  SELECT Eng FROM `table_s` WHERE gramtyp='adverb'
-                  UNION
-                  SELECT Eng FROM `table_t` WHERE gramtyp='adverb'
-                  UNION
-                  SELECT Eng FROM `table_u` WHERE gramtyp='adverb'
-                  UNION
-                  SELECT Eng FROM `table_v` WHERE gramtyp='adverb'
-                  UNION
-                  SELECT Eng FROM `table_w` WHERE gramtyp='adverb'
-                  UNION
-                  SELECT Eng FROM `table_x` WHERE gramtyp='adverb'
-                  UNION
-                  SELECT Eng FROM `table_y` WHERE gramtyp='adverb'
-                  UNION
-                  SELECT Eng FROM `table_z` WHERE gramtyp='adverb'";
-            $result = $con1->query($sql) or die($con1->error);
-            if ($result->num_rows > 0){
-                while($rows=$result->fetch_assoc()){
-                    $adwrd = $rows['Eng'];
-                    array_push($adverb, $adwrd); 
-                }
-            }
-
-                $Interrogative = array(); 
-
-            $sql="SELECT Eng FROM `all_words` WHERE gramtyp='Interrogative'
-                  UNION
-                  SELECT Eng FROM `table_a` WHERE gramtyp='Interrogative'
-                  UNION
-                  SELECT Eng FROM `table_b` WHERE gramtyp='Interrogative'
-                  UNION
-                  SELECT Eng FROM `table_c` WHERE gramtyp='Interrogative'
-                  UNION
-                  SELECT Eng FROM `table_d` WHERE gramtyp='Interrogative'
-                  UNION
-                  SELECT Eng FROM `table_e` WHERE gramtyp='Interrogative'
-                  UNION
-                  SELECT Eng FROM `table_f` WHERE gramtyp='Interrogative'
-                  UNION
-                  SELECT Eng FROM `table_g` WHERE gramtyp='Interrogative'
-                  UNION
-                  SELECT Eng FROM `table_h` WHERE gramtyp='Interrogative'
-                  UNION
-                  SELECT Eng FROM `table_i` WHERE gramtyp='Interrogative'
-                  UNION
-                  SELECT Eng FROM `table_j` WHERE gramtyp='Interrogative'
-                  UNION
-                  SELECT Eng FROM `table_k` WHERE gramtyp='Interrogative'
-                  UNION
-                  SELECT Eng FROM `table_l` WHERE gramtyp='Interrogative'
-                  UNION
-                  SELECT Eng FROM `table_m` WHERE gramtyp='Interrogative'
-                  UNION
-                  SELECT Eng FROM `table_n` WHERE gramtyp='Interrogative'
-                  UNION
-                  SELECT Eng FROM `table_o` WHERE gramtyp='Interrogative'
-                  UNION
-                  SELECT Eng FROM `table_p` WHERE gramtyp='Interrogative'
-                  UNION
-                  SELECT Eng FROM `table_q` WHERE gramtyp='Interrogative'
-                  UNION
-                  SELECT Eng FROM `table_r` WHERE gramtyp='Interrogative'
-                  UNION
-                  SELECT Eng FROM `table_s` WHERE gramtyp='Interrogative'
-                  UNION
-                  SELECT Eng FROM `table_t` WHERE gramtyp='Interrogative'
-                  UNION
-                  SELECT Eng FROM `table_u` WHERE gramtyp='Interrogative'
-                  UNION
-                  SELECT Eng FROM `table_v` WHERE gramtyp='Interrogative'
-                  UNION
-                  SELECT Eng FROM `table_w` WHERE gramtyp='Interrogative'
-                  UNION
-                  SELECT Eng FROM `table_x` WHERE gramtyp='Interrogative'
-                  UNION
-                  SELECT Eng FROM `table_y` WHERE gramtyp='Interrogative'
-                  UNION
-                  SELECT Eng FROM `table_z` WHERE gramtyp='Interrogative'";
-            $result = $con1->query($sql) or die($con1->error);
-            if ($result->num_rows > 0){
-                while($rows=$result->fetch_assoc()){
-                    $ques = $rows['Eng'];
-                    array_push($Interrogative , $ques); 
-                }
-            }
-
-                $verb = array();
-
-            $sql="SELECT Eng FROM `all_words` WHERE gramtyp='verb'
-                                    UNION
-                  SELECT Eng FROM `table_a` WHERE gramtyp='verb'
-                  UNION
-                  SELECT Eng FROM `table_b` WHERE gramtyp='verb'
-                  UNION
-                  SELECT Eng FROM `table_c` WHERE gramtyp='verb'
-                  UNION
-                  SELECT Eng FROM `table_d` WHERE gramtyp='verb'
-                  UNION
-                  SELECT Eng FROM `table_e` WHERE gramtyp='verb'
-                  UNION
-                  SELECT Eng FROM `table_f` WHERE gramtyp='verb'
-                  UNION
-                  SELECT Eng FROM `table_g` WHERE gramtyp='verb'
-                  UNION
-                  SELECT Eng FROM `table_h` WHERE gramtyp='verb'
-                  UNION
-                  SELECT Eng FROM `table_i` WHERE gramtyp='verb'
-                  UNION
-                  SELECT Eng FROM `table_j` WHERE gramtyp='verb'
-                  UNION
-                  SELECT Eng FROM `table_k` WHERE gramtyp='verb'
-                  UNION
-                  SELECT Eng FROM `table_l` WHERE gramtyp='verb'
-                  UNION
-                  SELECT Eng FROM `table_m` WHERE gramtyp='verb'
-                  UNION
-                  SELECT Eng FROM `table_n` WHERE gramtyp='verb'
-                  UNION
-                  SELECT Eng FROM `table_o` WHERE gramtyp='verb'
-                  UNION
-                  SELECT Eng FROM `table_p` WHERE gramtyp='verb'
-                  UNION
-                  SELECT Eng FROM `table_q` WHERE gramtyp='verb'
-                  UNION
-                  SELECT Eng FROM `table_r` WHERE gramtyp='verb'
-                  UNION
-                  SELECT Eng FROM `table_s` WHERE gramtyp='verb'
-                  UNION
-                  SELECT Eng FROM `table_t` WHERE gramtyp='verb'
-                  UNION
-                  SELECT Eng FROM `table_u` WHERE gramtyp='verb'
-                  UNION
-                  SELECT Eng FROM `table_v` WHERE gramtyp='verb'
-                  UNION
-                  SELECT Eng FROM `table_w` WHERE gramtyp='verb'
-                  UNION
-                  SELECT Eng FROM `table_x` WHERE gramtyp='verb'
-                  UNION
-                  SELECT Eng FROM `table_y` WHERE gramtyp='verb'
-                  UNION
-                  SELECT Eng FROM `table_z` WHERE gramtyp='verb'";
-            $result = $con1->query($sql) or die($con1->error);
-            if ($result->num_rows > 0){
-                while($rows=$result->fetch_assoc()){
-                    $vrb = $rows['Eng'];
-                    array_push($verb , $vrb);
-                }
-            }
-
-                $thrid_pr_verb = array();
-
-            $sql="SELECT Eng FROM `all_words` WHERE gramtyp='3pr_verb'
-                  UNION
-                  SELECT Eng FROM `table_a` WHERE gramtyp='3pr_verb'
-                  UNION
-                  SELECT Eng FROM `table_b` WHERE gramtyp='3pr_verb'
-                  UNION
-                  SELECT Eng FROM `table_c` WHERE gramtyp='3pr_verb'
-                  UNION
-                  SELECT Eng FROM `table_d` WHERE gramtyp='3pr_verb'
-                  UNION
-                  SELECT Eng FROM `table_e` WHERE gramtyp='3pr_verb'
-                  UNION
-                  SELECT Eng FROM `table_f` WHERE gramtyp='3pr_verb'
-                  UNION
-                  SELECT Eng FROM `table_g` WHERE gramtyp='3pr_verb'
-                  UNION
-                  SELECT Eng FROM `table_h` WHERE gramtyp='3pr_verb'
-                  UNION
-                  SELECT Eng FROM `table_i` WHERE gramtyp='3pr_verb'
-                  UNION
-                  SELECT Eng FROM `table_j` WHERE gramtyp='3pr_verb'
-                  UNION
-                  SELECT Eng FROM `table_k` WHERE gramtyp='3pr_verb'
-                  UNION
-                  SELECT Eng FROM `table_l` WHERE gramtyp='3pr_verb'
-                  UNION
-                  SELECT Eng FROM `table_m` WHERE gramtyp='3pr_verb'
-                  UNION
-                  SELECT Eng FROM `table_n` WHERE gramtyp='3pr_verb'
-                  UNION
-                  SELECT Eng FROM `table_o` WHERE gramtyp='3pr_verb'
-                  UNION
-                  SELECT Eng FROM `table_p` WHERE gramtyp='3pr_verb'
-                  UNION
-                  SELECT Eng FROM `table_q` WHERE gramtyp='3pr_verb'
-                  UNION
-                  SELECT Eng FROM `table_r` WHERE gramtyp='3pr_verb'
-                  UNION
-                  SELECT Eng FROM `table_s` WHERE gramtyp='3pr_verb'
-                  UNION
-                  SELECT Eng FROM `table_t` WHERE gramtyp='3pr_verb'
-                  UNION
-                  SELECT Eng FROM `table_u` WHERE gramtyp='3pr_verb'
-                  UNION
-                  SELECT Eng FROM `table_v` WHERE gramtyp='3pr_verb'
-                  UNION
-                  SELECT Eng FROM `table_w` WHERE gramtyp='3pr_verb'
-                  UNION
-                  SELECT Eng FROM `table_x` WHERE gramtyp='3pr_verb'
-                  UNION
-                  SELECT Eng FROM `table_y` WHERE gramtyp='3pr_verb'
-                  UNION
-                  SELECT Eng FROM `table_z` WHERE gramtyp='3pr_verb'";
-            $result = $con1->query($sql) or die($con1->error);
-            if ($result->num_rows > 0){
-                while($rows=$result->fetch_assoc()){
-                    $pr_vrb = $rows['Eng'];
-                    array_push($thrid_pr_verb , $pr_vrb);
-                }
-            }
-
-                $verbs = array('are','were','decide','decided');
-
-                function pronouninTheBeginning($main,$pronoun) {
-                    foreach($main as $key => $wrd) {
-                        if(in_array($wrd,$pronoun)) {
-                            unset($main[$key]);
-                            array_unshift($main,$wrd);
-                        }
+                $result = $con1->query($sql) or die($con1->error);
+                if ($result->num_rows > 0){
+                    while($rows=$result->fetch_assoc()){
+                        $term = $rows['Eng'];
+                        array_push($words_from_database , $term);
                     }
-                    return $main;
                 }
-
-                function nounAfterpronoun($start,$noun) {
-                    foreach($start as $key => $wrd) {
-                        if(in_array($wrd,$noun)) {
-                            unset($start[$key]);
-                            array_unshift($start,$wrd);
+            }else{
+                foreach ($verbs as $verb) {
+                            array_push($words_from_database , $verb);
                         }
-                    }
-                    return $start;
                 }
-
-                function adverbAfternoun($kn1,$adverb) {
-                    foreach($kn1 as $key => $wrd) {
-                        if(in_array($wrd,$adverb)) {
-                            unset($kn1[$key]);
-                            array_unshift($kn1,$wrd);
-                        }
-                    }
-                    return $kn1;
-                }
-
-                function quesinTheMiddle($conti,$Interrogative) {
-                    foreach($conti as $key => $wrd) {
-                        if(in_array($wrd,$Interrogative)) {
-                            unset($conti[$key]);
-                            $conti[] = $wrd;
-                        }
-                    }
-                    return $conti;
-                }
-
-                function verbbfoverbs($Ques,$verb) {
-                    foreach($Ques as $key => $wrd) {
-                        if(in_array($wrd,$verb)) {
-                            unset($Ques[$key]);
-                            $Ques[] = $wrd;
-                        }
-                    }
-                    return $Ques;
-                }
-
-                function verbsInTheEnd($sentcs,$verbs) {
-                    foreach($sentcs as $key => $wrd) {
-                        if(in_array($wrd,$verbs)) {
-                            unset($sentcs[$key]);
-                            $sentcs[] = $wrd;
-                        }
-                    }
-                    return $sentcs;
-                }
-
                 
-                function prverbInTheEnd($trans,$thrid_pr_verb) {
-                    foreach($trans as $key => $wrd) {
-                        if(in_array($wrd,$thrid_pr_verb)) {
-                            unset($trans[$key]);
-                            $trans[] = $wrd;
-                        }
+            foreach($word as $key => $value) {
+                if(in_array($value,$words_from_database)) {
+                    unset($word[$key]);
+                    if ($n < 3){
+                        array_unshift($word,$value);
+                    }else{
+                        $word[] = $value;
                     }
-                    return $trans;
+                    //print_r($word);
                 }
+            }
+            $n++;
+            if ($n <= 6){
+                return sentence_formation($word,$n,$con1);
+            }else{
+                return $word;
+            }
+        }
 
-                $pattern = '/([,\s:\s"\s!\s?\s.\'])/';
-                $components = preg_split($pattern, $eng, -1, PREG_SPLIT_DELIM_CAPTURE);
+$pattern = '/([,\s:\s"\s!\s?\s.\'])/';
+$components = preg_split($pattern, $eng, -1, PREG_SPLIT_DELIM_CAPTURE);
+
 $new = array();
 $new1 = array();
 $newarray = array();
@@ -593,59 +185,8 @@ $theword = array();
                     $kon = array();
                     $kn1 = array();
 
-            $sql="SELECT Eng FROM `all_words` WHERE Eng='$wrd1'
-                  UNION
-                  SELECT Eng FROM `table_a` WHERE Eng='$wrd1'
-                  UNION
-                  SELECT Eng FROM `table_b` WHERE Eng='$wrd1'
-                  UNION
-                  SELECT Eng FROM `table_c` WHERE Eng='$wrd1'
-                  UNION
-                  SELECT Eng FROM `table_d` WHERE Eng='$wrd1'
-                  UNION
-                  SELECT Eng FROM `table_e` WHERE Eng='$wrd1'
-                  UNION
-                  SELECT Eng FROM `table_f` WHERE Eng='$wrd1'
-                  UNION
-                  SELECT Eng FROM `table_g` WHERE Eng='$wrd1'
-                  UNION
-                  SELECT Eng FROM `table_h` WHERE Eng='$wrd1'
-                  UNION
-                  SELECT Eng FROM `table_i` WHERE Eng='$wrd1'
-                  UNION
-                  SELECT Eng FROM `table_j` WHERE Eng='$wrd1'
-                  UNION
-                  SELECT Eng FROM `table_k` WHERE Eng='$wrd1'
-                  UNION
-                  SELECT Eng FROM `table_l` WHERE Eng='$wrd1'
-                  UNION
-                  SELECT Eng FROM `table_m` WHERE Eng='$wrd1'
-                  UNION
-                  SELECT Eng FROM `table_n` WHERE Eng='$wrd1'
-                  UNION
-                  SELECT Eng FROM `table_o` WHERE Eng='$wrd1'
-                  UNION
-                  SELECT Eng FROM `table_p` WHERE Eng='$wrd1'
-                  UNION
-                  SELECT Eng FROM `table_q` WHERE Eng='$wrd1'
-                  UNION
-                  SELECT Eng FROM `table_r` WHERE Eng='$wrd1'
-                  UNION
-                  SELECT Eng FROM `table_s` WHERE Eng='$wrd1'
-                  UNION
-                  SELECT Eng FROM `table_t` WHERE Eng='$wrd1'
-                  UNION
-                  SELECT Eng FROM `table_u` WHERE Eng='$wrd1'
-                  UNION
-                  SELECT Eng FROM `table_v` WHERE Eng='$wrd1'
-                  UNION
-                  SELECT Eng FROM `table_w` WHERE Eng='$wrd1'
-                  UNION
-                  SELECT Eng FROM `table_x` WHERE Eng='$wrd1'
-                  UNION
-                  SELECT Eng FROM `table_y` WHERE Eng='$wrd1'
-                  UNION
-                  SELECT Eng FROM `table_z` WHERE Eng='$wrd1'";
+                    $sql=fetch('Eng','Eng',$wrd1);
+                    
                     $result = $con1->query($sql) or die($con1->error);
                         if ($result->num_rows > 0){
                                 //unset($kn1[1]);
@@ -663,59 +204,9 @@ $theword = array();
                         array_push($kn2, $word);
                         if (count($kn2) >= 2){
                             $wrd = implode(' ', $kn2);
-            $sql="SELECT Eng FROM `all_words` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_a` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_b` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_c` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_d` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_e` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_f` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_g` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_h` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_i` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_j` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_k` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_l` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_m` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_n` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_o` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_p` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_q` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_r` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_s` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_t` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_u` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_v` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_w` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_x` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_y` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_z` WHERE Eng='$wrd'";
+
+                        $sql=fetch('Eng','Eng',$wrd);
+            
                             $result = $con1->query($sql) or die($con1->error);
                                 if ($result->num_rows > 0){
                                     unset($kn1[$i-1]);
@@ -728,59 +219,9 @@ $theword = array();
                                     continue;
                                 }
                         }else{
-            $sql="SELECT Eng FROM `all_words` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_a` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_b` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_c` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_d` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_e` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_f` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_g` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_h` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_i` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_j` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_k` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_l` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_m` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_n` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_o` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_p` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_q` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_r` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_s` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_t` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_u` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_v` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_w` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_x` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_y` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_z` WHERE Eng='$word'";
+
+                        $sql=fetch('Eng','Eng',$word);
+            
                                 $result = $con1->query($sql) or die($con1->error);
                                 if ($result->num_rows > 0){
                                     $rows=$result->fetch_assoc();
@@ -795,14 +236,7 @@ $theword = array();
                             }
                         }
                     }
-                    //print_r($kn1);
-                $start = adverbAfternoun($kn1,$adverb);
-                $main = nounAfterpronoun($start,$noun);
-                $conti = pronouninTheBeginning($main,$pronoun);
-                $Ques = quesinTheMiddle($conti,$Interrogative);
-                $sentcs = verbbfoverbs($Ques,$verb);
-                $trans = verbsInTheEnd($sentcs,$verbs);
-                $final = prverbInTheEnd($trans,$thrid_pr_verb);
+                $final = sentence_formation($kn1,0,$con1);
 //Outputs "you guys great are"
             $nottobeadded = array('is','the','did');
 
@@ -817,122 +251,20 @@ $theword = array();
                         array_push($kn2, $word);
                         if (count($kn2) >= 2){
                             $wrd = implode(' ', $kn2);
-            $sql="SELECT Eng FROM `all_words` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_a` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_b` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_c` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_d` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_e` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_f` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_g` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_h` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_i` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_j` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_k` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_l` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_m` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_n` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_o` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_p` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_q` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_r` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_s` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_t` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_u` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_v` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_w` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_x` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_y` WHERE Eng='$wrd'
-                  UNION
-                  SELECT Eng FROM `table_z` WHERE Eng='$wrd'";
+
+                        $sql=fetch('Eng','Eng',$wrd);
+            
                             $result = $con1->query($sql) or die($con1->error);
-                                if ($result->num_rows > 0){
-                                    unset($kn1[$i-1]);
-                                    $rows=$result->fetch_assoc();
-                                    array_push($kon , $rows['Eng']);
-                                    $sentence = strtolower($wrd);
-                                    $newsent = ifInDatabase1($sentence,$kon);
-                                    $i++;
-                                }
+                            if ($result->num_rows > 0){
+                                unset($kn1[$i-1]);
+                                $rows=$result->fetch_assoc();
+                                array_push($kon , $rows['Eng']);
+                                $sentence = strtolower($wrd);
+                                $newsent = ifInDatabase1($sentence,$kon);
+                                $i++;
+                            }
                         }else{
-            $sql="SELECT Eng FROM `all_words` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_a` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_b` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_c` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_d` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_e` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_f` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_g` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_h` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_i` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_j` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_k` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_l` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_m` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_n` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_o` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_p` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_q` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_r` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_s` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_t` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_u` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_v` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_w` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_x` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_y` WHERE Eng='$word'
-                  UNION
-                  SELECT Eng FROM `table_z` WHERE Eng='$word'";
+                        $sql=fetch('Eng','Eng',$word);
                                 $result = $con1->query($sql) or die($con1->error);
                                 if ($result->num_rows > 0){
                                     $rows=$result->fetch_assoc();
@@ -946,68 +278,13 @@ $theword = array();
                             }
                         }
                     }
-                $start = adverbAfternoun($kn1,$adverb);
-                $main = nounAfterpronoun($start,$noun);
-                $conti = pronouninTheBeginning($main,$pronoun);
-                $Ques = quesinTheMiddle($conti,$Interrogative);
-                $sentcs = verbbfoverbs($Ques,$verb);
-                $trans = verbsInTheEnd($sentcs,$verbs);
-                $final = prverbInTheEnd($trans,$thrid_pr_verb);
+
+                $final = sentence_formation($kn1,0,$con1);
                 }
                         foreach ($final as $word) {
-            $sql="SELECT Kon FROM `all_words` WHERE Eng='$word'
-                  UNION
-                  SELECT Kon FROM `table_a` WHERE Eng='$word'
-                  UNION
-                  SELECT Kon FROM `table_b` WHERE Eng='$word'
-                  UNION
-                  SELECT Kon FROM `table_c` WHERE Eng='$word'
-                  UNION
-                  SELECT Kon FROM `table_d` WHERE Eng='$word'
-                  UNION
-                  SELECT Kon FROM `table_e` WHERE Eng='$word'
-                  UNION
-                  SELECT Kon FROM `table_f` WHERE Eng='$word'
-                  UNION
-                  SELECT Kon FROM `table_g` WHERE Eng='$word'
-                  UNION
-                  SELECT Kon FROM `table_h` WHERE Eng='$word'
-                  UNION
-                  SELECT Kon FROM `table_i` WHERE Eng='$word'
-                  UNION
-                  SELECT Kon FROM `table_j` WHERE Eng='$word'
-                  UNION
-                  SELECT Kon FROM `table_k` WHERE Eng='$word'
-                  UNION
-                  SELECT Kon FROM `table_l` WHERE Eng='$word'
-                  UNION
-                  SELECT Kon FROM `table_m` WHERE Eng='$word'
-                  UNION
-                  SELECT Kon FROM `table_n` WHERE Eng='$word'
-                  UNION
-                  SELECT Kon FROM `table_o` WHERE Eng='$word'
-                  UNION
-                  SELECT Kon FROM `table_p` WHERE Eng='$word'
-                  UNION
-                  SELECT Kon FROM `table_q` WHERE Eng='$word'
-                  UNION
-                  SELECT Kon FROM `table_r` WHERE Eng='$word'
-                  UNION
-                  SELECT Kon FROM `table_s` WHERE Eng='$word'
-                  UNION
-                  SELECT Kon FROM `table_t` WHERE Eng='$word'
-                  UNION
-                  SELECT Kon FROM `table_u` WHERE Eng='$word'
-                  UNION
-                  SELECT Kon FROM `table_v` WHERE Eng='$word'
-                  UNION
-                  SELECT Kon FROM `table_w` WHERE Eng='$word'
-                  UNION
-                  SELECT Kon FROM `table_x` WHERE Eng='$word'
-                  UNION
-                  SELECT Kon FROM `table_y` WHERE Eng='$word'
-                  UNION
-                  SELECT Kon FROM `table_z` WHERE Eng='$word'";
+
+                        $sql=fetch('Kon','Eng',$word);
+                        
                             $result = $con1->query($sql) or die($con1->error);
                             if ($result->num_rows > 0){
                                 $row=$result->fetch_assoc();
@@ -1019,11 +296,7 @@ $theword = array();
                                     array_push($new , $word);
                                 }
                             }
-                            //while($rows=$result->fetch_assoc()){ //"if there are extra words for one word"
-                                //echo $rows['Kon'];
-                                //echo " ";
-                                //}
-                            }
+                    }
             ?>
     <form method="post">
     <textarea placeholder="Your translated text here!" class="textarea2" id = "right"><?php $print=implode(' ', $new);echo $print; ?></textarea>
